@@ -19,6 +19,7 @@
   "homepage": "https://github.com/rwilmar/short-url#readme",
   "dependencies": {
     "express": "^4.18.1",
-    "jsondb": "^1.0.0"
+    "jsondb": "^1.0.0",
+    "simple-json-db": "^2.0.0"
   }
 }
