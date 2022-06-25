@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { getRegister, getUrl, saveUrl } from './persistence.js';
 
 const APP_PORT = 3000;
@@ -9,7 +10,7 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-
+/** json welcome message response */
 const welcomeMessage = (req, res) => {
   res.status(200).send({ message: "Welcome to the URL-Shortener API." });
 };
@@ -90,7 +91,13 @@ const shortenUrl = async (req, res) => {
   }
 }
 
-app.get('/', welcomeMessage);
+// ******** ROUTES ********
+app.get('/', (req, res) => {
+  if(req.headers?.accept.includes('text/html')) 
+    res.sendFile(path.resolve('.', 'index.htm')); 
+  else
+    return welcomeMessage(req, res);
+});
 app.post('/shorten', shortenUrl);
 app.get('/:hash/details', getUrlAddress);
 app.get('/:hash', redirToHash);
